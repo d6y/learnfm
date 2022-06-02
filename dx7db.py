@@ -143,7 +143,7 @@ def unpack_packed_patch(p):
         126, 126, 126, 126, 126, 126, 126, 126, 126, 126, # name
         127 # operator on/off
     ]
-    for i in xrange(156):
+    for i in range(156):
         if(o[i] > maxes[i]): o[i] = maxes[i]
         if(o[i] < 0): o[i] = 0
     return o
@@ -153,7 +153,7 @@ def convert_compact_to_unpacked():
     f = bytearray(open("compact.bin").read())
     o = open("unpacked.bin", "w")
     num_patches = len(f)/128
-    for patch in xrange(num_patches):
+    for patch in range(num_patches):
         patch_data = f[patch*128:patch*128+128]
         unpacked = unpack_packed_patch(patch_data)
         o.write(bytearray(unpacked))
@@ -171,11 +171,11 @@ def main():
             # Make sure the name is actually ASCII printable
             if(char < 32): name[i] = ' '
             if(char > 126): name[i] = ' '
-        names.write(name)
+        names.write(name.decode("utf-8"))
         names.write('\n')
     compact.close()
     names.close()
-    print "Wrote %d patches to compact.bin & names.txt" % (len(dedup.items()))
+    print("Wrote %d patches to compact.bin & names.txt" % (len(dedup.items())))
 
 if __name__ == "__main__":
     main()
