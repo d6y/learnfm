@@ -26,8 +26,8 @@
 #define N (1 << LG_N)
 
 #if defined(__APPLE__)
-#include <libkern/OSAtomic.h>
-#define SynthMemoryBarrier() OSMemoryBarrier()
+#include <atomic>
+#define SynthMemoryBarrier() std::atomic_thread_fence(std::memory_order_seq_cst)
 #elif defined(__GNUC__)
 #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)
 #define SynthMemoryBarrier() __sync_synchronize()
