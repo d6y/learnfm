@@ -1,5 +1,14 @@
 # learnfm
 
+For N23:
+
+Python set up:
+
+```
+conda env create -f environment.yml\n
+conda activate learnfm
+```
+
 
 ## Build the Python & C simulator
 
