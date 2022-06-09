@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdlib>
-#include <math.h>
 #include "synth.h"
 #include "module.h"
 #include "aligned_buf.h"
@@ -13,20 +12,18 @@
 #include "resofilter.h"
 #include "fm_core.h"
 #include "fm_op_kernel.h"
-#include "env.h"
 #include "patch.h"
 #include "controllers.h"
 #include "dx7note.h"
 
 using namespace std;
 
-void set_osc(char patch[156], int osc_num_from_one, int coarce, int fine, int output_level)
+int index_into_patch_array_for_osc_num(int osc_num_1_to_6)
 {
-    assert(osc_num_from_one >= 1 && osc_num_from_one <= 6);
+    assert(osc_num_1_to_6 >= 1 && osc_num_1_to_6 <= 6);
 
-    // Where in patch[] does the osc start?
     int osc_offset;
-    switch (osc_num_from_one)
+    switch (osc_num_1_to_6)
     {
     case 6:
         osc_offset = 0;
@@ -50,6 +47,13 @@ void set_osc(char patch[156], int osc_num_from_one, int coarce, int fine, int ou
     default:
         assert(false && "Unreachable");
     };
+
+    return osc_offset;
+}
+
+void set_osc(char patch[156], int osc_num_1_to_6, int coarce, int fine, int output_level)
+{
+    int osc_offset = index_into_patch_array_for_osc_num(osc_num_1_to_6);
 
     patch[osc_offset + 0] = 99;            // R1
     patch[osc_offset + 1] = 95;            // R2
@@ -114,15 +118,16 @@ void set_others(char patch[156], char name[10])
     patch[155] = 63;
 }
 
-void generate_wav(char patch[156], const char *filename)
+void generate_wav(char patch[156], const char *filename, double sample_rate)
 {
-    double sample_rate = 44100.0;
     const int n_samples = 10 * 1024;
 
     WavOut w(filename, sample_rate, n_samples);
 
     Dx7Note note;
-    note.init(patch, 50, 100);
+    int midi_note = 50;
+    int velocity = 100;
+    note.init(patch, midi_note, velocity);
     Controllers controllers;
     controllers.values_[kControllerPitch] = 0x2000;
     int32_t buf[N];
@@ -170,7 +175,7 @@ void write_patch()
 
     CheckPatch(unpacked_patch);
 
-    generate_wav(unpacked_patch, "/tmp/one.wav");
+    generate_wav(unpacked_patch, "/tmp/one.wav", sample_rate);
 
     free(unpacked_patch);
 }
