@@ -152,7 +152,7 @@ void generate_wav(char patch[156], const char *filename, double sample_rate)
     w.close();
 }
 
-void write_patch()
+void write_patch(char *filename, int coarse1, int fine1, int vol1, int coarse2, int fine2, int vol2, char name[10])
 {
     double sample_rate = 44100.0;
     Freqlut::init(sample_rate);
@@ -163,19 +163,18 @@ void write_patch()
 
     char *unpacked_patch = (char *)malloc(156);
 
-    set_osc(unpacked_patch, 1, 1, 0, 99);
-    set_osc(unpacked_patch, 2, 2, 0, 90);
+    set_osc(unpacked_patch, 1, coarse1, fine1, vol1);
+    set_osc(unpacked_patch, 2, coarse2, fine2, vol2);
     set_osc(unpacked_patch, 3, 0, 0, 0);
     set_osc(unpacked_patch, 4, 0, 0, 0);
     set_osc(unpacked_patch, 5, 0, 0, 0);
     set_osc(unpacked_patch, 6, 0, 0, 0);
 
-    char name[10] = "TEST     ";
     set_others(unpacked_patch, name);
 
     CheckPatch(unpacked_patch);
 
-    generate_wav(unpacked_patch, "/tmp/one.wav", sample_rate);
+    generate_wav(unpacked_patch, filename, sample_rate);
 
     free(unpacked_patch);
 }
@@ -183,6 +182,8 @@ void write_patch()
 int main(int argc, char **argv)
 {
     printf("Running n23.cc:main \n");
-    write_patch();
+    char name[10] = "TEST     ";
+    char filename[] = "/tmp/one.wav";
+    write_patch(filename, 1, 0, 99, 2, 0, 90, name);
     return 0;
 }
