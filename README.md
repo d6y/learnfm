@@ -7,6 +7,8 @@ Python set up:
 ```
 conda env create -f environment.yml\n
 conda activate learnfm
+make
+python setup.py install 
 ```
 
 

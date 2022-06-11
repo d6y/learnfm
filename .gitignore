@@ -1,10 +1,10 @@
 *.o
 *.pyc
+*.wav
 patches
 dx7core/build
-
 dx7core/dx7
-names.txt
-compact.bin
+dx7core/dx7.egg-info/
+dx7core/dist/dx7-0.0.0-py3.10-macosx-10.9-x86_64.egg
 .vscode/
-.gitignore
+XTUM
