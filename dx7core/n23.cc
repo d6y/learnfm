@@ -15,6 +15,7 @@
 #include "patch.h"
 #include "controllers.h"
 #include "dx7note.h"
+#include "n23.h"
 
 using namespace std;
 

@@ -5,10 +5,22 @@ For N23:
 Python set up:
 
 ```
-conda env create -f environment.yml\n
+conda env create -f environment.yml
 conda activate learnfm
+```
+
+Compile:
+
+```
+cd dx7core
 make
 python setup.py install 
+```
+
+Example in the root directory of this project:
+
+```
+python n23.py
 ```
 
 
