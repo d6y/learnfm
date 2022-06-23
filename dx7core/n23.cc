@@ -98,8 +98,8 @@ void set_others(char patch[156], int feedback, char name[10])
     patch[140] = 0;        // LAMD # LFO AM DEPTH
     patch[141] = 1;        // LKS # LFO KEY SYNC ? ORDER_CHANGEFD
     patch[142] = 0;        // LFW # LFO WAVE ORDER_CHANGED
-    patch[143] = 3;        // LPMS # P MODE SENS ?
-    patch[144] = 24;       // TRNSP # Transpose
+    patch[143] = 0;        // LPMS # P MODE SENS - pitch bend?
+    patch[144] = 0;        // TRNSP # Transpose
     patch[145] = name[0];  // NAME CHAR 1
     patch[146] = name[1];  // NAME CHAR 2
     patch[147] = name[2];  // NAME CHAR 3
@@ -126,7 +126,7 @@ void generate_wav(char patch[156], const char *filename, double sample_rate)
     WavOut w(filename, sample_rate, n_samples);
 
     Dx7Note note;
-    int midi_note = 50;
+    int midi_note = 36;
     int velocity = 100;
     note.init(patch, midi_note, velocity);
     Controllers controllers;
